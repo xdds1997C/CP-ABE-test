@@ -1,0 +1,25 @@
+Release 0.9: Thursday, March 24, 2011
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Applied patch from Jó to support DESTDIR in the build tools.
+
+Release 0.8: Tuesday, August 25, 2009
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Applied patch from Michael Braun (m.braun@tu-ilmenau.de) which fixes
+bug in bswabe_pub_free and updates bswabe.h to be C++ compatible.
+
+Applied patches from Jó Ágila Bitsch Link
+(jo.bitsch@cs.rwth-aachen.de) to compile against pbc-0.5.4.
+
+Release 0.7: Monday, October 22, 2007
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixed a bug in the build system (thanks to Eric Lin for pointing it
+out) and cleaned it up a little.
+
+Release 0.6: Friday, August 31, 2007
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First version of the library. Previously, this code existed in the
+cpabe package.

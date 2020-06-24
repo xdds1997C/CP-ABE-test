@@ -1,0 +1,80 @@
+top_srcdir = @top_srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+libdir = @libdir@
+includedir = @includedir@
+
+CC = @CC@
+CFLAGS  = @CFLAGS@ \
+	@GLIB_CFLAGS@ \
+	@GMP_CFLAGS@ \
+	@PBC_CFLAGS@ \
+	@DEFS@
+LDFLAGS = @LDFLAGS@ \
+	@GLIB_LIBS@ \
+	@GMP_LIBS@ \
+	@PBC_LIBS@ \
+	@LIBS@
+
+DISTNAME = @PACKAGE_TARNAME@-@PACKAGE_VERSION@
+
+all: libbswabe.a TAGS
+
+# compilation and library making
+
+libbswabe.a: core.o misc.o
+	rm -f $@
+	ar rc $@ $^
+
+# test: test.o libbswabe.a
+# 	$(CC) -o $@ $(LDFLAGS) $^
+
+%.o: %.c *.h Makefile
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+# installation
+
+dist: AUTHORS COPYING INSTALL NEWS README \
+	aclocal.m4 acinclude.m4 configure configure.ac Makefile.in \
+	install-sh missing mkinstalldirs \
+	core.c misc.c private.h bswabe.h
+	rm -rf $(DISTNAME)
+	mkdir $(DISTNAME)
+	cp $^ $(DISTNAME)
+	tar zc $(DISTNAME) > $(DISTNAME).tar.gz
+	rm -rf $(DISTNAME)
+
+install: libbswabe.a bswabe.h
+	$(top_srcdir)/mkinstalldirs -m 755 $(DESTDIR)$(libdir)
+	$(top_srcdir)/mkinstalldirs -m 755 $(DESTDIR)$(includedir)
+	$(top_srcdir)/install-sh -m 755 libbswabe.a $(DESTDIR)$(libdir)
+	$(top_srcdir)/install-sh -m 644 bswabe.h $(DESTDIR)$(includedir)
+
+uninstall:
+	/bin/rm -f $(DESTDIR)$(libdir)/libbswabe.a
+	/bin/rm -f $(DESTDIR)$(includedir)/bswabe.h
+
+# development and meta stuff
+
+TAGS: *.c *.h
+	@(etags $^ || true) 2> /dev/null
+
+Makefile: Makefile.in config.status
+	./config.status
+
+config.status: configure
+	./config.status --recheck
+
+configure: configure.ac aclocal.m4
+	autoconf
+
+# cleanup
+
+# remove everything an installing user can rebuild
+clean:
+	rm -rf *.o *.a $(DISTNAME) *.tar.gz TAGS *~
+
+# remove everything a package developer can rebuild
+distclean: clean
+	rm -rf autom4te.cache Makefile config.status config.log config.cache \
+		configure configure.scan autoscan*.log

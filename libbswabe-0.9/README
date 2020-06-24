@@ -1,0 +1,8 @@
+Right now, the only documentation that exists for this library is the
+set of comments in the header file bswabe.h. For usage examples, look
+through the source of the cpabe package found at the URL below.
+
+  http://acsc.cs.utexas.edu/cpabe/
+
+Email John Bethencourt <bethenco@cs.berkeley.edu> with any questions,
+comments, or bug reports.
